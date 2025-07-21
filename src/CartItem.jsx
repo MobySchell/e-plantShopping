@@ -1,10 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeItem, updateQuantity } from "./CartSlice";
 import "./CartItem.css";
+import { useState } from "react";
 
-const CartItem = () => {
+const CartItem = ({ onContinueShopping }) => {
     const cart = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
+    const [checkout, setCheckout] = useState(false);
 
     // Calculate total amount for all products in the cart
     const calculateTotalAmount = () => {
@@ -104,12 +106,17 @@ const CartItem = () => {
             <div className="continue_shopping_btn">
                 <button
                     className="get-started-button"
-                    onClick={(e) => handleContinueShopping(e)}
+                    onClick={onContinueShopping}
                 >
                     Continue Shopping
                 </button>
                 <br />
-                <button className="get-started-button1">Checkout</button>
+                <button
+                    className="get-started-button1"
+                    onClick={() => setCheckout(!checkout)}
+                >
+                    {checkout ? "Coming Soon" : "Checkout"}
+                </button>
             </div>
         </div>
     );
